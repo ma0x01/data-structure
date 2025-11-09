@@ -35,5 +35,16 @@ void DeleteNode(Node *head, int index); //删除某结点
 
 void DeleteLinkedList(Node *head); //释放链表
 
+//单链表相关算法
+
+Node *FindNodeFS(Node *head, int k); //1. 倒数第k个结点 - 双指针法
+
+Node *ReverseList(Node *head); //2. 反转链表
+
+void delMiddleNode(Node *head); //3. 删除中间结点
+
+int haveCircle(Node *head); //4. 判断链表是否有环-快慢指针（走到同一位置就证明有）
+
+Node *findCircle(Node *head); //5. 寻找链表中环的位置
 
 #endif //DATA_STRUCTURE_SINGLY_LINKED_LIST_H

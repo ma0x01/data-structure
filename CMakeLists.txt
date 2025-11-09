@@ -14,4 +14,5 @@ add_executable(data_structure main.c
         linear/linked-list/doubly_linked_list.c
         linear/linked-list/doubly_linked_list.h
         linear/linked-list/singly_linked_list_test.c
+        linear/linked-list/doubly_linked_list_test.c
 )

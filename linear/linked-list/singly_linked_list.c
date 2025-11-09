@@ -147,3 +147,118 @@ void DeleteLinkedList(Node *head) //释放链表
 	}
 	free(head);
 }
+
+//单链表相关算法
+Node *FindNodeFS(Node *head, int k) //1. 倒数第k个结点 - 双指针法
+{
+	if (head == NULL || head->next == NULL || k <= 0)
+	{
+		return NULL;
+	}
+
+	Node *fast = head->next;
+	Node *slow = head->next;
+	for (int i = 0; i < k; i++)
+	{
+		if (fast == NULL)
+		{
+			return NULL;
+		}
+		fast = fast->next;
+	}
+
+	while (fast != NULL)
+	{
+		fast = fast->next;
+		slow = slow->next;
+	}
+	return slow;
+}
+
+Node *ReverseList(Node *head) //2. 反转链表
+{
+	Node *first = NULL;
+	Node *second = head->next;
+	Node *third;
+
+	while (second != NULL)
+	{
+		third = second->next;
+		second->next = first;
+		first = second;
+		second = third;
+	}
+
+	head->next = first;
+	return head;
+}
+
+void delMiddleNode(Node *head) //3. 删除中间结点
+{
+	//找到中间结点
+	Node *fast = head->next;
+	Node *slow = head;
+	while (fast != NULL && fast->next != NULL)
+	{
+		fast = fast->next->next;
+		slow = slow->next;
+	}
+
+	Node *temp = slow->next;
+	slow->next = temp->next;
+	free(temp);
+}
+
+int haveCircle(Node *head) //4. 判断链表是否有环-快慢指针（走到同一位置就证明有）
+{
+	Node *fast = head;
+	Node *slow = head;
+	while (fast != NULL && fast->next != NULL)
+	{
+		fast = fast->next->next;
+		slow = slow->next;
+		if (fast == slow)
+		{
+			return 1;
+		}
+	}
+
+	return 0;
+}
+
+Node *findCircle(Node *head) //5. 寻找链表中环的位置
+{
+	Node *fast = head;
+	Node *slow = head;
+	int circleLength = 1;
+
+	while (fast != NULL && fast->next != NULL)
+	{
+		fast = fast->next->next;
+		slow = slow->next;
+		if (fast == slow)
+		{
+			Node *p = fast->next;
+			while (p != fast)
+			{
+				circleLength++;
+				p = p->next;
+			}
+			fast = head;
+			slow = head;
+
+			for (int i = 0; i < circleLength; i++)
+			{
+				fast = fast->next;
+			}
+			while (fast != slow)
+			{
+				fast = fast->next;
+				slow = slow->next;
+			}
+
+			return slow;
+		}
+	}
+	return NULL;
+}
