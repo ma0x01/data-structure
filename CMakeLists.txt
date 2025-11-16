@@ -15,4 +15,14 @@ add_executable(data_structure main.c
         linear/linked-list/doubly_linked_list.h
         linear/linked-list/singly_linked_list_test.c
         linear/linked-list/doubly_linked_list_test.c
+        linear/queue/seq_queue.c
+        linear/queue/seq_queue.h
+        linear/queue/linked_queue.c
+        linear/queue/linked_queue.h
+        linear/stack/seq_stack.c
+        linear/stack/seq_stack.h
+        linear/stack/linked_stack.c
+        linear/stack/linked_stack.h
+        linear/stack/seq_stack_test.c
+        linear/stack/linked_stack_test.c
 )

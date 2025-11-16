@@ -1,0 +1,8 @@
+//
+// Created by tube on 2025/11/9.
+//
+
+#ifndef DATA_STRUCTURE_SEQ_QUEUE_H
+#define DATA_STRUCTURE_SEQ_QUEUE_H
+
+#endif //DATA_STRUCTURE_SEQ_QUEUE_H
