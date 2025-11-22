@@ -25,4 +25,6 @@ add_executable(data_structure main.c
         linear/stack/linked_stack.h
         linear/stack/seq_stack_test.c
         linear/stack/linked_stack_test.c
+        algo/recur.c
+        algo/recur.h
 )

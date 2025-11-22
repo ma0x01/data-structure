@@ -8,6 +8,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdbool.h>
+#include<string.h>
 
 typedef int ElementType;
 
@@ -35,5 +36,13 @@ void PrintStack(Stack *st); //输出栈元素
 void ClearStack(Stack *st); //清空栈
 
 void DestroyStack(Stack *st); //销毁栈
+
+int GetPriority(char c); //获取运算符优先级
+
+char *InfixToPostfix(const char *expression); //中缀表达式转后缀
+
+int Evaluate(int left, int right, char c); //计算
+
+int EvaluatePostfix(const char *expression); //计算后缀表达式
 
 #endif //DATA_STRUCTURE_SEQ_STACK_H

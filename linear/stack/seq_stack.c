@@ -4,6 +4,8 @@
 
 #include "seq_stack.h"
 
+#include <math.h>
+
 bool InitStack(Stack *st, int initSize) //初始化
 {
 	st->data = (ElementType *) malloc(sizeof(ElementType) * initSize);
@@ -115,4 +117,127 @@ void DestroyStack(Stack *st) //销毁栈
 
 	st->top = -1;
 	st->capacity = 0;
+}
+
+int GetPriority(char c)
+{
+	switch (c)
+	{
+		case '^':
+			return 5;
+		case '*':
+			return 4;
+		case'/':
+			return 3;
+		case'+':
+			return 2;
+		case'-':
+			return 1;
+		default:
+			return 0;
+	}
+}
+
+char *InfixToPostfix(const char *expression) //中缀表达式转后缀
+{
+	int len = strlen(expression);
+	char *new = (char *) malloc((len + 1) * sizeof(char));
+	int index = 0;
+	char *stack = (char *) malloc((len + 1) * sizeof(char));
+	int top = -1; //栈顶指针
+
+	for (int i = 0; i < len; i++)
+	{
+		char c = expression[i];
+
+		if (c >= '0' && c <= '9') //数字直接输出
+		{
+			new[index++] = c;
+		}
+		else if (expression[i] == '(') //左括号栈外优先级最高
+		{
+			stack[++top] = c;
+		}
+		else if (c == ')') //右括号持续出栈到左括号出栈为止
+		{
+			while (top >= 0 && stack[top] != '(')
+			{
+				new[index++] = stack[top--];
+			}
+			if (top >= 0 && stack[top] == '(')
+			{
+				top--; //弹掉左括号
+			}
+		}
+		else
+		{
+			// 栈顶优先级 >= 当前运算符时，不断弹栈
+			while (top >= 0 && stack[top] != '(' && GetPriority(stack[top]) >= GetPriority(c))
+			{
+				new[index++] = stack[top--];
+			}
+
+			stack[++top] = c; // 当前符号入栈
+		}
+	}
+
+	while (top >= 0)
+	{
+		if (stack[top] != '(')
+		{
+			new[index++] = stack[top];
+		}
+		top--;
+	}
+
+	new[index] = '\0'; // 结束符
+
+	free(stack);
+	return new;
+}
+
+int Evaluate(int left, int right, char c) //计算
+{
+	switch (c)
+	{
+		case '+':
+			return left + right;
+		case '-':
+			return left - right;
+		case '*':
+			return left * right;
+		case '/':
+			return left / right;
+		case '^':
+			return pow(left, right);
+		default:
+			return 0;
+	}
+}
+
+int EvaluatePostfix(const char *expression) //计算后缀表达式
+{
+	int len = strlen(expression);
+	int *stack = (int *) malloc((len + 1) * sizeof(int));
+	int top = -1; //栈顶指针
+
+	for (int i = 0; i < len; i++)
+	{
+		char c = expression[i];
+		if (c >= '0' && c <= '9') //数字入栈
+		{
+			stack[++top] = c - '0';
+		}
+		else if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^')
+		{
+			int second = stack[top--];
+			int first = stack[top--];
+
+			stack[++top] = Evaluate(first, second, c);
+		}
+	}
+
+	int result = stack[top];
+	free(stack);
+	return result;
 }
